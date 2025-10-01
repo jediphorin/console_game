@@ -196,6 +196,10 @@ const Weapon& Character::getWeapon() const {
     return weapon;
 }
 
+void Character::defaultTurnCount() {
+    turnCount = 0;
+}
+
 void Character::displayStats() const {
     std::cout << "\n=== Статистика персонажа ===" << std::endl;
     std::cout << "Класс: " << getClassName() << std::endl;

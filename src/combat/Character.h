@@ -46,7 +46,9 @@ public:
     int getCurrentHealth() const;
     int getLevel() const;
     int getTurnCount() const;
-    const Weapon& getWeapon() const;    
+    const Weapon& getWeapon() const;
+
+    void defaultTurnCount();    
 };
 
 #endif

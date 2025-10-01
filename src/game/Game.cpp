@@ -58,6 +58,7 @@ void Game::battle() {
     }
     if (player->isAlive()) {
         player->healFull();
+        player->defaultTurnCount();
         std::cout << "УРА! Вы победили " << monster.getName() << "!" << std::endl;
         std::cout << "В жопе у монстра ты находишь " << monster.getRewardWeapon().weaponInfo() << std::endl;
         std::cout << "Твоё текущее " << player->getWeapon().weaponInfo() << std::endl;
