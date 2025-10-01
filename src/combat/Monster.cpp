@@ -122,9 +122,7 @@ void Monster::takeDamage(int damage, DamageType damageType, const Character& att
         std::cout << name << " не получает урона!" << std::endl;    
 }
 
-bool Monster::isAlive() const {
-    return (currentHealth > 0);
-}
+// bool Monster::isAlive() const {return (currentHealth > 0);}
 std::string Monster::getName() const {
     return name;
 }

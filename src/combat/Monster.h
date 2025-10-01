@@ -25,7 +25,7 @@ public:
     Monster(MonsterType type);
     bool attack(Character& target);
     void takeDamage(int damage, DamageType damageType, const Character& attacker);
-    bool isAlive() const;
+    // bool isAlive() const;
     std::string getName() const;
     int getBaseDamage() const;
     int getStrength() const;

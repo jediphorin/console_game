@@ -41,9 +41,7 @@ void Character::calculateStats() {
     fullHealth += endurance;
 }
 
-bool Character::isAlive() const {
-    return (currentHealth > 0);
-}
+// bool Character::isAlive() const {return (currentHealth > 0);}
 
 int Character::calculateDamage(int targetAgility) const {
     int damageResult = weapon.getDamage() + strength;

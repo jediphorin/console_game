@@ -6,6 +6,7 @@
 #include <chrono>
 #include <stdexcept>
 #include "./RandomUtils.h"
+#include "./EntityUtils.h"
 
 Game::Game() : consecutiveWins(0), gameWon(false) {}
 
@@ -35,11 +36,11 @@ void Game::battle() {
     std::cout << "Здоровье монстра: " << monster.getCurrentHealth() << std::endl;
     pause(3);
     bool playerFirst = player->getAgility() >= monster.getAgility();
-    while(player->isAlive() && monster.isAlive()) {
+    while (EntityUtils::isAlive(player->getCurrentHealth()) && EntityUtils::isAlive(monster.getCurrentHealth())) {
         if (playerFirst) {
             std::cout << "\n--- Ход игрока.---" << std::endl;
             player->attack(monster);
-            if (!monster.isAlive())
+            if (!(EntityUtils::isAlive(monster.getCurrentHealth())))
                 break;
             pause(3);
             std::cout << "\n--- Ход монстра.---" << std::endl;
@@ -48,14 +49,14 @@ void Game::battle() {
         } else {            
             std::cout << "\n--- Ход монстра.---" << std::endl;
             monster.attack(*player);
-            if(!player->isAlive())
+            if (!(EntityUtils::isAlive(player->getCurrentHealth())))
                 break;
-                pause(3);
+            pause(3);
             std::cout << "\n--- Ход игрока.---" << std::endl;
             player->attack(monster);
         }
     }
-    if (player->isAlive()) {
+    if (EntityUtils::isAlive(player->getCurrentHealth())) {
         player->healFull();
         player->defaultTurnCount();
         std::cout << "УРА! Вы победили " << monster.getName() << "!" << std::endl;
@@ -80,9 +81,9 @@ void Game::run() {
         while (!gameWon) {
             showClassSelection();
             createCharacter();
-            while (player->isAlive() && !gameWon) {
+            while (EntityUtils::isAlive(player->getCurrentHealth()) && !gameWon) {
                 battle();
-                if (player->isAlive()) {
+                if (EntityUtils::isAlive(player->getCurrentHealth())) {
                     consecutiveWins++;
                     if (consecutiveWins == 3) {
                         std::cout << "ПОБЕДА! Победа над 3 монстрами подряд." << std::endl;

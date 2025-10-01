@@ -34,7 +34,7 @@ public:
     void equip(const Weapon& newWeapon);
     void healFull();
 
-    bool isAlive() const;
+    // bool isAlive() const;
     std::string getClassName() const;
     void displayStats();
     void defaultTurnCount();
