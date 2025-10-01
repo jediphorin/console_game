@@ -2,6 +2,7 @@
 #include "Character.h"
 #include <iostream>
 #include <random>
+#include "../game/RandomUtils.h"
 
 Monster::Monster(MonsterType type)
     : monsterType(type), turnCount(0), rewardWeapon("Нет", 0, DamageType::SLASHING) {
@@ -66,15 +67,12 @@ Monster::Monster(MonsterType type)
 
 bool Monster::attack(Character& target) {
     turnCount++;
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, agility + target.getAgility());
-    bool hitResult = false;
-    if(dis(gen) <= target.getAgility())
+    bool hitResult = RandomUtils::checkHit(agility, target.getAgility());
+    if (!hitResult)
         std::cout << name << " промахнулся!" << std::endl;
     else {
         int damage = baseDamage + strength;
-        if (monsterType == MonsterType::DRAGON && turnCount %3 == 0) {
+        if (monsterType == MonsterType::DRAGON && turnCount % 3 == 0) {
             damage += 3;
             std::cout << "Дракон дышит огнём! +3 урона." << std::endl;
         } else if (monsterType == MonsterType::GHOST && agility > target.getAgility()) {

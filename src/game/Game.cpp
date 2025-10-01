@@ -5,17 +5,15 @@
 #include <thread>
 #include <chrono>
 #include <stdexcept>
+#include "./RandomUtils.h"
 
 Game::Game() : consecutiveWins(0), gameWon(false) {}
 
 void Game::createCharacter() {
     std::cout << "\n=== СОЗДАНИЕ ПЕРСОНАЖА ===" << std::endl;
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 3);
-    int str = dis(gen);
-    int agi = dis(gen);
-    int end = dis(gen);
+    int str = RandomUtils::randomInt(1, 3);
+    int agi = RandomUtils::randomInt(1, 3);
+    int end = RandomUtils::randomInt(1, 3);
     std::cout << "Случайные характеристики: " << std::endl;
     std::cout << " сила = " << str << ";" << std::endl;
     std::cout << " ловкость = " << agi << ";" << std::endl;
@@ -70,7 +68,8 @@ void Game::battle() {
             player->equip(monster.getRewardWeapon());
             std::cout << "Оружие заменено!" << std::endl;
         } else
-            std::cout << "Оставил оружие в жопе у монстра." << std::endl;            
+            std::cout << "Оставил оружие в жопе у монстра." << std::endl;
+        player->displayStats();
     } else 
         std::cout << "\n=== ПОРАЖЕННИЕ! Ваш персонаж погиб. ===" << std::endl;    
 }
@@ -151,23 +150,6 @@ void Game::showLevelUpMenu() {
 }
 
 Monster Game::generateRandomMonster() {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, 5);
-    int monsterType = dis(gen);
+    int monsterType = RandomUtils::randomInt(0, 5);
     return Monster(static_cast<MonsterType>(monsterType));
-    /*switch(monsterType) {
-        case 0:
-            return Monster("Гоблин", 5, 2, 1, 1, 1, Weapon("Кинжал", 2, DamageType::PIERCING));
-        case 1:
-            return Monster("Скелет", 10, 2, 2, 2, Weapon("Дубина", 3, DamageType::CRUSHING));
-        case 2:
-            return Monster("Слайм", 8, 1, 3, 1, Weapon("Копьё", 3, DamageType::PIERCING));
-        case 3:
-            return Monster("Призрак", 6, 3, 1, 3, Weapon("Меч", 3, DamageType::SLASHING));
-        case 4:
-            return Monster("Голем", 10, 1, 3, 1, Weapon("Топор", 4, DamageType::SLASHING));
-        case 5:
-            return Monster("Дракон", 20, 4, 3, 3, Weapon("Легендарный меч", 5, DamageType::SLASHING));
-    }*/
 }

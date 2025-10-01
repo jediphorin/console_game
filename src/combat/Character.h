@@ -10,7 +10,6 @@ enum class CharacterClass { ROGUE, WARRIOR, BARBARIAN };
 
 class Character {
 private:
-    // std::string name;
     CharacterClass characterClass;
     int strength;
     int agility;
@@ -37,7 +36,8 @@ public:
 
     bool isAlive() const;
     std::string getClassName() const;
-    void displayStats() const;
+    void displayStats();
+    void defaultTurnCount();
 
     int getStrength() const;
     int getAgility() const;
@@ -46,9 +46,7 @@ public:
     int getCurrentHealth() const;
     int getLevel() const;
     int getTurnCount() const;
-    const Weapon& getWeapon() const;
-
-    void defaultTurnCount();    
+    const Weapon& getWeapon() const;    
 };
 
 #endif

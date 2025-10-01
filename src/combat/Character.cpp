@@ -53,7 +53,7 @@ int Character::calculateDamage(int targetAgility) const {
                 // воин 1: двойной урон оружием в первый ход
                 if (lvl >= 1 && turnCount == 1) {
                     damageResult += weapon.getDamage();
-                    std::cout << "Порыв к действию! +" << weapon.getDamage() << "урона." << std::endl;
+                    std::cout << "Порыв к действию! +" << weapon.getDamage() << " урона." << std::endl;
                 }                
                 break;
             case CharacterClass::BARBARIAN:
@@ -80,11 +80,8 @@ int Character::calculateDamage(int targetAgility) const {
 
 bool Character::attack(Monster& target) {
     turnCount++;
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, agility + target.getAgility());
-    bool hitResult = false;
-    if (dis(gen) <= target.getAgility()) 
+    bool hitResult = RandomUtils::checkHit(agility, target.getAgility());
+    if (!hitResult)
         std::cout << "Промах!" << std::endl;
     else {
         int damage = calculateDamage(target.getAgility());
@@ -200,7 +197,7 @@ void Character::defaultTurnCount() {
     turnCount = 0;
 }
 
-void Character::displayStats() const {
+void Character::displayStats() {
     std::cout << "\n=== Статистика персонажа ===" << std::endl;
     std::cout << "Класс: " << getClassName() << std::endl;
     std::cout << "Уровень: " << level << std::endl;
