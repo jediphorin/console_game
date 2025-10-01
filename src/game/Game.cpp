@@ -5,8 +5,8 @@
 #include <thread>
 #include <chrono>
 #include <stdexcept>
-#include "./RandomUtils.h"
-#include "./EntityUtils.h"
+#include "../utils/RandomUtils.h"
+#include "../utils/EntityUtils.h"
 
 Game::Game() : consecutiveWins(0), gameWon(false) {}
 

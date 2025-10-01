@@ -1,8 +1,7 @@
 #include "Character.h"
 #include "Monster.h"
 #include <iostream>
-#include "../game/RandomUtils.h"
-// #include <random>
+#include "../utils/RandomUtils.h"
 
 Character::Character(CharacterClass charClass, int str, int agi, int end)
     : characterClass(charClass), strength(str), agility(agi), endurance(end), level(1), turnCount(0), weapon("Кулаки", 1, DamageType::CRUSHING) {

@@ -2,7 +2,7 @@
 #include "Character.h"
 #include <iostream>
 #include <random>
-#include "../game/RandomUtils.h"
+#include "../utils/RandomUtils.h"
 
 Monster::Monster(MonsterType type)
     : monsterType(type), turnCount(0), rewardWeapon("Нет", 0, DamageType::SLASHING) {
