@@ -4,6 +4,7 @@
 #include <memory>
 #include <thread>
 #include <chrono>
+#include <stdexcept>
 
 Game::Game() : consecutiveWins(0), gameWon(false) {}
 
@@ -70,36 +71,39 @@ void Game::battle() {
             std::cout << "Оружие заменено!" << std::endl;
         } else
             std::cout << "Оставил оружие в жопе у монстра." << std::endl;            
-    } else {
-        std::cout << "\n=== ПОРАЖЕННИЕ! Ваш персонаж погиб. ===" << std::endl;
-    }
+    } else 
+        std::cout << "\n=== ПОРАЖЕННИЕ! Ваш персонаж погиб. ===" << std::endl;    
 }
 
 void Game::run() {
     std::cout << "=== АВТОБАТТЛЕР ===" << std::endl;
-    while (!gameWon) {
-        showClassSelection();
-        createCharacter();
-        while (player->isAlive() && !gameWon) {
-            battle();
-            if (player->isAlive()) {
-                consecutiveWins++;
-                if (consecutiveWins == 3) {
-                    std::cout << "ПОБЕДА! Победа над 3 монстрами подряд." << std::endl;
-                    gameWon = true;
-                    break;
+    try {
+        while (!gameWon) {
+            showClassSelection();
+            createCharacter();
+            while (player->isAlive() && !gameWon) {
+                battle();
+                if (player->isAlive()) {
+                    consecutiveWins++;
+                    if (consecutiveWins == 3) {
+                        std::cout << "ПОБЕДА! Победа над 3 монстрами подряд." << std::endl;
+                        gameWon = true;
+                        break;
+                    }
+                    showLevelUpMenu();
                 }
-                showLevelUpMenu();
+            }
+            if(!gameWon) {
+                std::cout << "\nВаш персонаж убит. Чтобы создать нового, введи 'y' или 'Y': ";
+                char choice;
+                std::cin >> choice;
+                if (choice != 'y' && choice != 'Y')
+                    break;
             }
         }
-        if(!gameWon) {
-            std::cout << "\nВаш персонаж убит. Чтобы создать нового, введи 'y' или 'Y': ";
-            char choice;
-            std::cin >> choice;
-            if (choice != 'y' && choice != 'Y')
-                break;
-        }
-    }
+    } catch(const std::exception& e) {
+        std::cout << "\nИгра завершена: " << e.what() << std::endl;
+    }            
 }
 
 void Game::showClassSelection() {    
@@ -118,6 +122,10 @@ CharacterClass Game::selectClass() {
     int choice;
     while (true) {
         std::cout << "Выбирай класс: 1 - разбойник, 2 - воин, 3 - варвар (1-3): ";
+        if (std::cin.eof()) {
+            std::cout << "\nЗавершение игры." << std::endl;
+            throw std::runtime_error("Игрунок ввёл EOF.");
+        }
         // Проверяем, является ли ввод числом
         if (!(std::cin >> choice)) {
             // Очищаем флаги ошибок
@@ -127,7 +135,6 @@ CharacterClass Game::selectClass() {
             std::cout << "Ошибка: введите целое число!" << std::endl;
             continue;
         }
-        //
         if (choice >= 1 && choice <= 3)
             return static_cast<CharacterClass>(choice - 1);
         std::cout << "Неверный выбор. Попробуйте снова." << std::endl;

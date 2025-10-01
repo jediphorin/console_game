@@ -29,7 +29,7 @@ public:
                 infoResult += "рубящий.";
                 break;
             case DamageType::CRUSHING:
-                infoResult += "дробящий";
+                infoResult += "дробящий.";
                 break;
             case DamageType::PIERCING:
                 infoResult += "колющий.";
