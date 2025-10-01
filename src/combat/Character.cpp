@@ -43,6 +43,7 @@ void Character::calculateStats() {
 // bool Character::isAlive() const {return (currentHealth > 0);}
 
 int Character::calculateDamage(int targetAgility) const {
+// int Character::calculateDamage(int targetAgility, int targetFullHealth, int targetCurrentHealth) const {
     int damageResult = weapon.getDamage() + strength;
     for(const auto& [cls, lvl] : classLevels) {
         switch(cls) {
@@ -69,6 +70,7 @@ int Character::calculateDamage(int targetAgility) const {
                     damageResult++;
                     std::cout << "Скрытая атака! +1 урона." << std::endl;
                 }
+                /*if ((lvl == 3) && (targetFullHealth != targetCurrentHealth)) {}*/
                 if (lvl == 3 && turnCount > 1) {
                     damageResult += (turnCount - 1);
                     std::cout << "Прогрессирующий урон от яда! +" << (turnCount - 1) << " единиц." << std::endl;

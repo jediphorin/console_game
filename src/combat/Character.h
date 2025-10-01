@@ -23,6 +23,7 @@ private:
 
     void calculateStats();
     int calculateDamage(int targetAgility = 0) const;
+    // int calculateDamage(int targetAgility = 0, int targetFullHealth, int targetCurrentHealth) const;
 
 public:
     Character(CharacterClass charClass, int str, int agi, int end);
