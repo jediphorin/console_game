@@ -92,7 +92,7 @@ void Monster::applySpecialEffects(int& damage, DamageType damageType, const Char
     switch(monsterType) {
         case MonsterType::SKELETON:
             if (damageType == DamageType::CRUSHING) {
-                damage *= 2;
+                damage += attacker.getWeapon().getDamage();
                 std::cout << "Дробящее оружие удваивает урон по скелету!" << std::endl;
             }
             break;

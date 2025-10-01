@@ -78,6 +78,7 @@ void Game::battle() {
 void Game::run() {
     std::cout << "=== АВТОБАТТЛЕР ===" << std::endl;
     while (!gameWon) {
+        showClassSelection();
         createCharacter();
         while (player->isAlive() && !gameWon) {
             battle();
