@@ -71,7 +71,8 @@ bool Monster::attack(Character& target) {
     if (!hitResult)
         std::cout << name << " промахнулся!" << std::endl;
     else {
-        int damage = baseDamage + strength;
+        // int damage = baseDamage + strength;
+        int damage = baseDamage;
         if (monsterType == MonsterType::DRAGON && turnCount % 3 == 0) {
             damage += 3;
             std::cout << "Дракон дышит огнём! +3 урона." << std::endl;
@@ -122,7 +123,6 @@ void Monster::takeDamage(int damage, DamageType damageType, const Character& att
         std::cout << name << " не получает урона!" << std::endl;    
 }
 
-// bool Monster::isAlive() const {return (currentHealth > 0);}
 std::string Monster::getName() const {
     return name;
 }

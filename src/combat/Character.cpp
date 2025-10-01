@@ -68,8 +68,12 @@ int Character::calculateDamage(int targetAgility) const {
                 if(targetAgility < agility) {
                     damageResult++;
                     std::cout << "Скрытая атака! +1 урона." << std::endl;
-                }                    
-                break;
+                }
+                if (lvl == 3 && turnCount > 1) {
+                    damageResult += (turnCount - 1);
+                    std::cout << "Прогрессирующий урон от яда! +" << (turnCount - 1) << " единиц." << std::endl;
+                }
+                break;            
         }
     }
     return damageResult;
@@ -136,7 +140,7 @@ void Character::levelUp(CharacterClass newClass) {
     }
     calculateStats();
     healFull();
-    std::cout << "Уровень повышен! Теперь вы " << getClassName() << " уровня " << level << std::endl;
+    std::cout << "Уровень повышен! Теперь вы " << getClassName() << ", ваш уровень - " << level << std::endl;
 }
 
 void Character::equip(const Weapon& dropWeapon) {
