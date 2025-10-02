@@ -110,17 +110,40 @@ void Monster::applySpecialEffects(int& damage, DamageType damageType, const Char
         default:
             break;
     }
+    if (attacker.getClassLevels().count(CharacterClass::ROGUE) > 0 && attacker.getClassLevels().at(CharacterClass::ROGUE) == 3) {
+        if (!poison) {
+            poison = std::make_unique<Poison>(0, false);
+            std::cout << "ЯД СОЗДАН 115" << std::endl;
+        }
+    }
 }
 
 void Monster::takeDamage(int damage, DamageType damageType, const Character& attacker) {
     int finalDamage = damage;
     applySpecialEffects(finalDamage, damageType, attacker);
-
+    if (poison) {
+        std::cout << "ЯД СУЩЕСТВУЕТ 123" << std::endl;
+        if (poison->getPoisonStatus()) {
+            std::cout << "Яд забрал " << poison->getDamage() << " единиц здоровья." << std::endl;
+            finalDamage += poison->getDamage();
+            std::cout << "УРОН ОТ ЯДА ДОБАВЛЕН ВО ВЕСЬ УРОН 127" << std::endl;
+        } else {
+            std::cout << "Яд будет отравлять монстра со следующего хода." << std::endl;
+            poison->setPoisonStatus(true);
+            std::cout << "ДЕЙСТВИЕ ЯДА ВКЛЮЧЕНО 131" << std::endl;
+        }
+        poison->damageProgression();
+    }
+    std::cout << "ЯДОВИТЫЙ БЛОК ЗАКОНЧЕН 135" << std::endl;
     if (finalDamage > 0) {
         currentHealth -= finalDamage;
         std::cout << name << " получает урон = " << finalDamage << ". Здоровье " << currentHealth << "/" << fullHealth << "." << std::endl;
     } else
         std::cout << name << " не получает урона!" << std::endl;    
+}
+
+void Monster::swallowPoison(int damage) {
+    currentHealth -= damage;
 }
 
 std::string Monster::getName() const {
@@ -138,9 +161,16 @@ int Monster::getAgility() const {
 int Monster::getEndurance() const {
     return endurance;
 }
+int Monster::getFullHealth() const {
+    return fullHealth;
+}
 int Monster::getCurrentHealth() const {
     return currentHealth;
 }
 Weapon Monster::getRewardWeapon() const {
     return rewardWeapon;
+}
+
+Poison* Monster::getPoison() const { 
+    return poison.get(); 
 }

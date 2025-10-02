@@ -40,10 +40,7 @@ void Character::calculateStats() {
     fullHealth += endurance;
 }
 
-// bool Character::isAlive() const {return (currentHealth > 0);}
-
 int Character::calculateDamage(int targetAgility) const {
-// int Character::calculateDamage(int targetAgility, int targetFullHealth, int targetCurrentHealth) const {
     int damageResult = weapon.getDamage() + strength;
     for(const auto& [cls, lvl] : classLevels) {
         switch(cls) {
@@ -70,11 +67,6 @@ int Character::calculateDamage(int targetAgility) const {
                     damageResult++;
                     std::cout << "Скрытая атака! +1 урона." << std::endl;
                 }
-                /*if ((lvl == 3) && (targetFullHealth != targetCurrentHealth)) {}*/
-                if (lvl == 3 && turnCount > 1) {
-                    damageResult += (turnCount - 1);
-                    std::cout << "Прогрессирующий урон от яда! +" << (turnCount - 1) << " единиц." << std::endl;
-                }
                 break;            
         }
     }
@@ -84,13 +76,25 @@ int Character::calculateDamage(int targetAgility) const {
 bool Character::attack(Monster& target) {
     turnCount++;
     bool hitResult = RandomUtils::checkHit(agility, target.getAgility());
-    if (!hitResult)
+    if (!hitResult) {
         std::cout << "Промах!" << std::endl;
+        if (target.getPoison()) {
+            if (getClassLevels().count(CharacterClass::ROGUE) > 0 && getClassLevels().at(CharacterClass::ROGUE) == 3 && target.getPoison()->getPoisonStatus()) {            
+                int damage = target.getPoison()->getDamage();
+                std::cout << "Но яд всё равно наносит " << target.getPoison()->getDamage() << " урона!" << std::endl;
+                target.swallowPoison(damage);
+                target.getPoison()->damageProgression();
+            }
+        }
+    }        
     else {
         int damage = calculateDamage(target.getAgility());
-        std::cout << "Попадание! Урон = " << damage << std::endl;        
+        std::cout << "Попадание! Урон = " << damage << std::endl;
         target.takeDamage(damage, weapon.getType(), *this);
         hitResult = true;
+    }
+    if (target.getPoison()) {
+        std::cout << "текущий урон от яда = " << target.getPoison()->getDamage() << "." << std::endl;
     }
     return hitResult;
 }
@@ -194,6 +198,10 @@ int Character::getTurnCount() const {
 }
 const Weapon& Character::getWeapon() const {
     return weapon;
+}
+std::map<CharacterClass, int> Character::getClassLevels() const
+{
+    return classLevels;
 }
 
 void Character::defaultTurnCount() {

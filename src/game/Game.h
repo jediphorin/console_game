@@ -4,7 +4,6 @@
 #include "../combat/Character.h"
 #include "../combat/Monster.h"
 #include "../combat/Weapon.h"
-#include <vector>
 #include <memory>
 
 class Game {
@@ -12,7 +11,6 @@ private:
     std::unique_ptr<Character> player;
     int consecutiveWins;
     bool gameWon;
-    // std::vector<Weapon> availableWeapons;
 
     void createCharacter();
     void pause(int time);

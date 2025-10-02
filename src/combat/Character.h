@@ -1,7 +1,8 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include "Weapon.h"
+#include "./Weapon.h"
+#include "./Poison.h"
 #include <string>
 #include <map>
 
@@ -20,6 +21,7 @@ private:
     int turnCount;
     Weapon weapon;
     std::map<CharacterClass, int> classLevels;
+    // std::unique_ptr<Poison> poison;
 
     void calculateStats();
     int calculateDamage(int targetAgility = 0) const;
@@ -46,7 +48,8 @@ public:
     int getCurrentHealth() const;
     int getLevel() const;
     int getTurnCount() const;
-    const Weapon& getWeapon() const;    
+    const Weapon& getWeapon() const;
+    std::map<CharacterClass, int> getClassLevels() const;
 };
 
 #endif

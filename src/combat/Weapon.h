@@ -5,7 +5,7 @@
 
 enum class DamageType { SLASHING, CRUSHING, PIERCING };
 
-class Weapon{
+class Weapon {
 private:
     std::string name;
     int damage;

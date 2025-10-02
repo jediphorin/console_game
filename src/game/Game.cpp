@@ -60,16 +60,18 @@ void Game::battle() {
         player->healFull();
         player->defaultTurnCount();
         std::cout << "УРА! Вы победили " << monster.getName() << "!" << std::endl;
-        std::cout << "В жопе у монстра ты находишь " << monster.getRewardWeapon().weaponInfo() << std::endl;
-        std::cout << "Твоё текущее " << player->getWeapon().weaponInfo() << std::endl;
-        std::cout << "Чтобы заменить оружие, введи 'y' или 'Y'." << std::endl;
-        char choice;
-        std::cin >> choice;
-        if (choice == 'y' || choice == 'Y') {
-            player->equip(monster.getRewardWeapon());
-            std::cout << "Оружие заменено!" << std::endl;
-        } else
+        if (monster.getRewardWeapon().getName() != player->getWeapon().getName()) {
+            std::cout << "В жопе у монстра ты находишь " << monster.getRewardWeapon().weaponInfo() << std::endl;
+            std::cout << "Твоё текущее " << player->getWeapon().weaponInfo() << std::endl;
+            std::cout << "Чтобы заменить оружие, введи 'y' или 'Y'." << std::endl;
+            char choice;
+            std::cin >> choice;
+            if (choice == 'y' || choice == 'Y') {
+                player->equip(monster.getRewardWeapon());
+                std::cout << "Оружие заменено!" << std::endl;
+            } else
             std::cout << "Оставил оружие в жопе у монстра." << std::endl;
+        }        
         player->displayStats();
     } else 
         std::cout << "\n=== ПОРАЖЕННИЕ! Ваш персонаж погиб. ===" << std::endl;    
