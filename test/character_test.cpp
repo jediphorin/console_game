@@ -55,7 +55,6 @@ TEST_F(CharacterTest, RogueSneakAttack) {
 TEST_F(CharacterTest, WarriorFirstTurnBonus) {
     // Первый ход воина - двойной урон оружием
     warrior->attack(*(std::make_unique<Monster>(MonsterType::GOBLIN)).get());
-    // Проверяем через отладочный вывод или модифицируем метод
 }
 
 // Тесты прокачки

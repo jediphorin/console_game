@@ -6,9 +6,11 @@ class GameLogicTest : public ::testing::Test {
 protected:
     void SetUp() override {
         game = std::make_unique<Game>();
+        slime = std::make_unique<Monster>(MonsterType::SLIME);
     }
 
     std::unique_ptr<Game> game;
+    std::unique_ptr<Monster> slime;
 };
 
 TEST_F(GameLogicTest, EntityUtils) {
@@ -21,10 +23,15 @@ TEST_F(GameLogicTest, EntityUtils) {
 TEST_F(GameLogicTest, CharacterAliveCheck) {
     Character character(CharacterClass::WARRIOR, 2, 2, 2);
     EXPECT_TRUE(EntityUtils::isAlive(character.getCurrentHealth()));
+}
+
+TEST_F(GameLogicTest, CharacterDeadCheck) {
+    Character character(CharacterClass::WARRIOR, 2, 2, 2);
+    EXPECT_TRUE(EntityUtils::isAlive(character.getCurrentHealth()));
     
     // Симулируем смерть
-    // character.takeDamage(character.getCurrentHealth() + 10, ...);
-    // EXPECT_FALSE(EntityUtils::isAlive(character.getCurrentHealth()));
+    character.takeDamage(character.getCurrentHealth(), *slime);
+    EXPECT_FALSE(EntityUtils::isAlive(character.getCurrentHealth()));
 }
 
 TEST_F(GameLogicTest, WeaponComparison) {

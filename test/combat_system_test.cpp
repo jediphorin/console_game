@@ -32,24 +32,10 @@ TEST_F(CombatSystemTest, HitCalculation) {
     EXPECT_LT(hits, attempts * 0.9);
 }
 
-TEST_F(CombatSystemTest, TurnOrder) {
-    Character highAgility(CharacterClass::ROGUE, 1, 4, 1);
-    Monster lowAgilityMonster(MonsterType::GOLEM); // Ловкость 1
-    
-    // Первым должен ходить персонаж с большей ловкостью
-    // Проверяем через симуляцию боя
-}
-
 TEST_F(CombatSystemTest, DamageTypes) {
     Weapon crushing("Дубина", 3, DamageType::CRUSHING);
-    Weapon slashing("Меч", 3, DamageType::SLASHING);
-    Weapon piercing("Кинжал", 2, DamageType::PIERCING);
     
     warrior->equip(crushing);
     int vsSkeleton = warrior->calculateDamage(skeleton->getAgility());
-    
-    warrior->equip(slashing);
-    int vsSlime = warrior->calculateDamage(slime->getAgility());
-    
-    // Урон должен различаться из-за особенностей монстров
+    EXPECT_EQ(vsSkeleton, 6);
 }

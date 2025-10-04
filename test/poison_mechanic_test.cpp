@@ -13,7 +13,7 @@ protected:
     std::unique_ptr<Monster> enemy;
 };
 
-//  тест падает, если первая атака мажет, поэтому ловкость у Разбойника = 100, чтобы почти гарантировать успех
+//  тест падает, если первая атака мажет, поэтому ловкость у Разбойника = 100, чтобы ПОЧТИ гарантировать успех
 TEST_F(PoisonTest, PoisonMechanics) {
     rogue->levelUp(CharacterClass::ROGUE);
     rogue->levelUp(CharacterClass::ROGUE); // 3 уровень - яд

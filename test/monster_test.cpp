@@ -24,32 +24,3 @@ TEST_F(MonsterTest, MonsterStats) {
     EXPECT_EQ(golem->getFullHealth(), 10);
     EXPECT_EQ(dragon->getFullHealth(), 20);
 }
-
-TEST_F(MonsterTest, SpecialAbilities) {
-    Character warrior(CharacterClass::WARRIOR, 2, 2, 2);
-    Weapon crushingWeapon("Дубина", 3, DamageType::CRUSHING);
-    Weapon slashingWeapon("Меч", 3, DamageType::SLASHING);
-    
-    warrior.equip(crushingWeapon);
-    int damageToSkeleton = warrior.calculateDamage(skeleton->getAgility());
-    
-    // Скелет должен получать двойной урон от дробящего
-    warrior.equip(slashingWeapon);
-    int normalDamage = warrior.calculateDamage(skeleton->getAgility());
-    
-    // Не можем напрямую проверить, но логика в applySpecialEffects
-}
-
-TEST_F(MonsterTest, DragonFireBreath) {
-    for (int i = 1; i <= 4; i++) {
-        dragon->attack(*(std::make_unique<Character>(CharacterClass::WARRIOR, 2, 2, 2)).get());
-        // Каждый 3-й ход должен быть +3 урона
-    }
-}
-
-TEST_F(MonsterTest, GhostSneakAttack) {
-    Character lowAgilityChar(CharacterClass::WARRIOR, 3, 1, 2); // Ловкость 1
-    Character highAgilityChar(CharacterClass::ROGUE, 1, 4, 1);  // Ловкость 4
-    
-    // Призрак должен получать +1 против низколовких целей
-}

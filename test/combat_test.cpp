@@ -7,11 +7,9 @@ class RogueCombatTest : public ::testing::Test {
 protected:
     void SetUp() override {
         rogue = std::make_unique<Character>(CharacterClass::ROGUE, 1, 2, 3);
-        // Прокачиваем до 3 уровня разбойника
         rogue->levelUp(CharacterClass::ROGUE);
         rogue->levelUp(CharacterClass::ROGUE);
         
-        // Экипируем меч
         sword = std::make_unique<Weapon>("Меч", 3, DamageType::SLASHING);
         rogue->equip(*sword);
         
@@ -85,17 +83,6 @@ TEST_F(RogueCombatTest, SlimeSlashingResistance) {
     // Базовый урон: 3(меч) + 1(сила) = 4, но слайм игнорирует урон от рубящего оружия
     // Должен остаться только урон от силы и возможных бонусов
     EXPECT_LT(damageDealt, 4);
-}
-
-TEST_F(RogueCombatTest, RogueSneakAttack) {
-    // У разбойника ловкость 3, у слайма 1 - должна сработать скрытая атака
-    Monster highAgilityMonster(MonsterType::GHOST); // Ловкость 3
-    
-    // Атакуем слайма (ловкость 1 < 3) - должна быть скрытая атака
-    rogue->attack(*slime);
-    
-    // Атакуем призрака (ловкость 3 = 3) - не должно быть скрытой атаки
-    // Для этого нужно модифицировать метод attack чтобы он возвращал информацию о бонусах
 }
 
 TEST_F(RogueCombatTest, CombatSimulation) {
