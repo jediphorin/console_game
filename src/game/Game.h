@@ -8,21 +8,21 @@
 
 class Game {
 private:
-    std::unique_ptr<Character> player;
-    int consecutiveWins;
-    bool gameWon;
+  std::unique_ptr<Character> player;
+  int consecutiveWins;
+  bool gameWon;
 
-    void createCharacter();
-    void pause(int time);
-    void battle();
-    void showLevelUpMenu();
-    void showClassSelection();
-    CharacterClass selectClass();
-    Monster generateRandomMonster();
+  void createCharacter();
+  void pause(int time);
+  void battle();
+  void showLevelUpMenu();
+  void showClassSelection();
+  CharacterClass selectClass();
+  Monster generateRandomMonster();
 
 public:
-    Game();
-    void run();
+  Game();
+  void run();
 };
 
 #endif
